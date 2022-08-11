@@ -5,6 +5,15 @@
 package frc.robot.util;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ElevatorManual;
+import frc.robot.commands.IntakeManual;
+import frc.robot.commands.ManualDrive;
+import frc.robot.commands.WristManual;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Wrist;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,10 +27,17 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+    Drivetrain.getInstance().setDefaultCommand(new ManualDrive());
+    Intake.getInstance().setDefaultCommand(new IntakeManual());
+    Elevator.getInstance().setDefaultCommand(new ElevatorManual());
+    Wrist.getInstance().setDefaultCommand(new WristManual());
+  }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
   @Override
   public void autonomousInit() {}
